@@ -19,6 +19,10 @@ namespace TP7_GRUPO_24
         {
 
         }
+        public Sucursal(string NombreSucursal)
+        {
+            _NombreSucursal = NombreSucursal;
+        }
 
         public Sucursal(int idSucursal, string NombreSucursal ,string DescripcionSucursal, string URL_Imagen_Sucursal)
         {
