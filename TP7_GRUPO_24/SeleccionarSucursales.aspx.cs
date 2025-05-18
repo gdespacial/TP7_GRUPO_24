@@ -11,12 +11,24 @@ namespace TP7_GRUPO_24
     public partial class SeleccionarSucursales : System.Web.UI.Page
     {
         Sucursal sucursal = new Sucursal();
+        GestionSucursales gestionSucursales = new GestionSucursales();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Page.UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
+            if (!IsPostBack)
+            {
+                cargarListView();
+            }
         }
 
-   
+        private void cargarListView()
+        {
+            sucursal = new Sucursal(txtSucursales.Text);
+            var tabla = gestionSucursales.FiltrarTabla(sucursal);
+            ListViewSucursales.DataSource = tabla;
+            ListViewSucursales.DataBind();
+
+        }
 
         protected void btnSeleccionar_Command1(object sender, CommandEventArgs e)
         {
@@ -68,5 +80,27 @@ namespace TP7_GRUPO_24
             return dataTable;
         }
 
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            var pager = ListViewSucursales.FindControl("DataPager1") as DataPager;
+            if (pager != null)
+            {
+                pager.SetPageProperties(0, pager.PageSize, false); // Ir a la primera página
+            }
+
+            cargarListView();
+        }
+
+        protected void ListViewSucursales_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+        {
+            var pager = ListViewSucursales.FindControl("DataPager1") as DataPager;
+            if (pager != null)
+            {
+                pager.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+            }
+            cargarListView();
+        }
+
     }
+
 }

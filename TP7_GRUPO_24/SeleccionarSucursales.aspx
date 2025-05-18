@@ -18,8 +18,9 @@
             Listado de sucursales:</p>
         <p>
             Busqueda por nombre de sucursal:<asp:TextBox ID="txtSucursales" runat="server"></asp:TextBox>
+            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
         </p>
-        <asp:ListView ID="ListViewSucursales" runat="server"  DataSourceID="SqlDataSourceSucursales" GroupItemCount="3" DataKeyNames="Id_Sucursal">
+        <asp:ListView ID="ListViewSucursales" runat="server" GroupItemCount="3" DataKeyNames="Id_Sucursal" OnPagePropertiesChanging="ListViewSucursales_PagePropertiesChanging">
             <AlternatingItemTemplate>           
             </AlternatingItemTemplate>
             <EditItemTemplate>
@@ -115,7 +116,6 @@
                 </td>
             </SelectedItemTemplate>
         </asp:ListView>
-        <asp:SqlDataSource ID="SqlDataSourceSucursales" runat="server" ConnectionString="<%$ ConnectionStrings:BDSucursalesConnectionString %>" SelectCommand="SELECT [NombreSucursal], [DescripcionSucursal], [URL_Imagen_Sucursal], [Id_Sucursal] FROM [Sucursal]"></asp:SqlDataSource>
         <asp:Label ID="lblMensaje" runat="server"></asp:Label>
     </form>
 </body>
