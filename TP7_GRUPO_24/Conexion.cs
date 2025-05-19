@@ -9,7 +9,8 @@ namespace TP7_GRUPO_24
 {
     public class Conexion
     {
-        string connectionString = @"Data Source=DESKTOP-9AUAVE3\SQLEXPRESS;Initial Catalog=BDSucursales;Integrated Security=True";
+        //string connectionString = @"Data Source=DESKTOP-9AUAVE3\SQLEXPRESS;Initial Catalog=BDSucursales;Integrated Security=True";
+        string connectionString = @"Data Source=MOSTRADOR-PC\SQLEXPRESS;Initial Catalog=BDSucursales;Integrated Security=True";
         public SqlConnection ObtenerConexion()  // Metodo simple para obtener la conexion a SQL.
         {
             SqlConnection conexion = new SqlConnection(connectionString);
@@ -17,20 +18,16 @@ namespace TP7_GRUPO_24
             return conexion;
         }
 
-        public DataTable ObtenerTablaFiltrada(SqlCommand comando, string consultaSQL, string nombreTabla)
-        {
+            public DataTable ObtenerTablaFiltrada(SqlCommand comando, string consultaSQL, string nombreTabla)
+            {
+                SqlConnection conexion = ObtenerConexion();
 
-            SqlConnection conexion = ObtenerConexion();
-
-            comando.Connection = conexion;
-            comando.CommandText = consultaSQL;
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(comando); // Usar DataAdapter + DataSet para cargas simples.
-            DataSet dataTable = new DataSet();
-            sqlDataAdapter.Fill(dataTable, nombreTabla);
-            return dataTable.Tables[nombreTabla];
-
-
-
+                comando.Connection = conexion;
+                comando.CommandText = consultaSQL;
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(comando); // Usar DataAdapter + DataSet para cargas simples.
+                DataSet dataTable = new DataSet();
+                sqlDataAdapter.Fill(dataTable, nombreTabla);
+                return dataTable.Tables[nombreTabla];
+            }
         }
     }
-}

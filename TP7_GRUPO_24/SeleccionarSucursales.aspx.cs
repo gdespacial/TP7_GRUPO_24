@@ -18,16 +18,34 @@ namespace TP7_GRUPO_24
             if (!IsPostBack)
             {
                 cargarListView();
+                cargarDataList();
             }
         }
 
         private void cargarListView()
         {
-            sucursal = new Sucursal(txtSucursales.Text);
-            var tabla = gestionSucursales.FiltrarTabla(sucursal);
-            ListViewSucursales.DataSource = tabla;
-            ListViewSucursales.DataBind();
+            if (string.IsNullOrEmpty(txtSucursales.Text))
+            {
+                DataTable tabla = gestionSucursales.ObtenerTodasLasSucursales(); // Modificado.
+                ListViewSucursales.DataSource = tabla;
+                ListViewSucursales.DataBind();
+            }
+            else
+            {
+                
+                sucursal = new Sucursal(txtSucursales.Text);
+                var tabla = gestionSucursales.FiltrarTabla(sucursal);
+                ListViewSucursales.DataSource = tabla;
+                ListViewSucursales.DataBind();
+            }
+        }
 
+
+        private void cargarDataList() // Agregado.
+        {
+            DataTable table = gestionSucursales.LeerConsulta();
+            DataListProvincias.DataSource = table;
+            DataListProvincias.DataBind();
         }
 
         protected void btnSeleccionar_Command1(object sender, CommandEventArgs e)
@@ -101,6 +119,18 @@ namespace TP7_GRUPO_24
             cargarListView();
         }
 
+        protected void btnProvincias_Command(object sender, CommandEventArgs e) //Funcionalidad boton.
+        {
+            if(e.CommandName == "eventoBoton")
+            {
+                int idProvincia = int.Parse(e.CommandArgument.ToString());
+                Sucursal sucursal = new Sucursal();
+                sucursal.Id_ProvinciaSucursal = idProvincia;                
+                DataTable tabla = gestionSucursales.FiltrarPorProvincia(sucursal);
+                ListViewSucursales.DataSource = tabla;
+                ListViewSucursales.DataBind();
+            }
+        }
     }
 
 }

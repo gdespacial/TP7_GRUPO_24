@@ -19,9 +19,29 @@
         <p>
             Busqueda por nombre de sucursal:<asp:TextBox ID="txtSucursales" runat="server"></asp:TextBox>
             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
+            <asp:Label ID="lblMessage" runat="server"></asp:Label>
         </p>
-        <asp:ListView ID="ListViewSucursales" runat="server" GroupItemCount="3" DataKeyNames="Id_Sucursal" OnPagePropertiesChanging="ListViewSucursales_PagePropertiesChanging">
-            <AlternatingItemTemplate>           
+        &nbsp;&nbsp;&nbsp;
+        <asp:DataList ID="DataListProvincias" runat="server">
+            <ItemTemplate>
+                <asp:Button ID="btnProvincias" runat="server" Text='<%# Eval("DescripcionProvincia") %>' CommandArgument='<%# Eval("Id_Provincia") %>' CommandName="eventoBoton" OnCommand="btnProvincias_Command" />
+            </ItemTemplate>
+        </asp:DataList>
+        <asp:ListView ID="ListViewSucursales" runat="server" GroupItemCount="4" DataKeyNames="Id_Sucursal" OnPagePropertiesChanging="ListViewSucursales_PagePropertiesChanging" >
+            <AlternatingItemTemplate>  
+                      <td style="background-color: #E0FFFF; color: #000000; text-align: center; vertical-align: top;">
+                    NombreSucursal:<br />
+                    <asp:Label ID="NombreSucursalLabel" runat="server" Text='<%# Eval("NombreSucursal") %>' /><br />
+                    DescripcionSucursal:<br />
+                    <asp:Label ID="DescripcionSucursalLabel" runat="server" Text='<%# Eval("DescripcionSucursal") %>' /><br />
+                    URL_Imagen_Sucursal:<br />
+                    <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("URL_Imagen_Sucursal") %>' Height="100px" Width="100px" /><br />
+                    Id_Sucursal:<br />
+                    <asp:Label ID="Id_SucursalLabel" runat="server" Text='<%# Eval("Id_Sucursal") %>' /><br />
+                    <asp:Button ID="btnSeleccionar" runat="server"
+                        CommandArgument='<%# Eval("Id_Sucursal") + " - " + Eval("NombreSucursal") + " - " + Eval("DescripcionSucursal") %>'
+                        CommandName="eventoSeleccionar" OnCommand="btnSeleccionar_Command1" Text="Seleccionar" />
+                </td>
             </AlternatingItemTemplate>
             <EditItemTemplate>
                 <td runat="server" style="background-color: #008A8C; color: #FFFFFF;">NombreSucursal:
@@ -50,9 +70,9 @@
 <td runat="server" />
             </EmptyItemTemplate>
             <GroupTemplate>
-                <tr id="itemPlaceholderContainer" runat="server">
-                    <td id="itemPlaceholder" runat="server"></td>
-                </tr>
+  <tr id="itemPlaceholderContainer" runat="server">
+            <td id="itemPlaceholder" runat="server"></td>
+        </tr>
             </GroupTemplate>
             <InsertItemTemplate>
                 <td runat="server" style="">NombreSucursal:
@@ -68,40 +88,37 @@
                     <br /></td>
             </InsertItemTemplate>
             <ItemTemplate>
-                <td runat="server" style="background-color: #DCDCDC; color: #000000;">NombreSucursal:
-                    <asp:Label ID="NombreSucursalLabel" runat="server" Text='<%# Eval("NombreSucursal") %>' />
-                    <br />DescripcionSucursal:
-                    <asp:Label ID="DescripcionSucursalLabel" runat="server" Text='<%# Eval("DescripcionSucursal") %>' />
-                    <br />URL_Imagen_Sucursal:
-                    <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("URL_Imagen_Sucursal") %>' Height="100px" Width="100px" />
-                    <br />
-                    Id_Sucursal:
-                    <asp:Label ID="Id_SucursalLabel" runat="server" Text='<%# Eval("Id_Sucursal") %>' />
-                    <asp:Button ID="btnSeleccionar" runat="server" CommandArgument='<%# Eval("Id_Sucursal")+ " - " +Eval("NombreSucursal")+" - "+Eval("DescripcionSucursal") %>' CommandName="eventoSeleccionar" OnCommand="btnSeleccionar_Command1" Text="Seleccionar" />
-                    <br /></td>
+                  <td style="background-color: #DCDCDC; color: #000000; text-align: center; vertical-align: top;">
+            NombreSucursal:<br />
+            <asp:Label ID="NombreSucursalLabel" runat="server" Text='<%# Eval("NombreSucursal") %>' /><br />
+            DescripcionSucursal:<br />
+            <asp:Label ID="DescripcionSucursalLabel" runat="server" Text='<%# Eval("DescripcionSucursal") %>' /><br />
+            URL_Imagen_Sucursal:<br />
+            <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("URL_Imagen_Sucursal") %>' Height="100px" Width="100px" /><br />
+            Id_Sucursal:<br />
+            <asp:Label ID="Id_SucursalLabel" runat="server" Text='<%# Eval("Id_Sucursal") %>' /><br />
+            <asp:Button ID="btnSeleccionar" runat="server"
+                CommandArgument='<%# Eval("Id_Sucursal") + " - " + Eval("NombreSucursal") + " - " + Eval("DescripcionSucursal") %>'
+                CommandName="eventoSeleccionar" OnCommand="btnSeleccionar_Command1" Text="Seleccionar" />
+        </td>
             </ItemTemplate>
             <LayoutTemplate>
-                <table runat="server">
-                    <tr runat="server">
-                        <td runat="server">
-                            <table id="groupPlaceholderContainer" runat="server" border="1" style="background-color: #FFFFFF;border-collapse: collapse;border-color: #999999;border-style:none;border-width:1px;font-family: Verdana, Arial, Helvetica, sans-serif;">
-                                <tr id="groupPlaceholder" runat="server">
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr runat="server">
-                        <td runat="server" style="text-align: center;background-color: #CCCCCC; font-family: Verdana, Arial, Helvetica, sans-serif;color: #000000">
-                            <asp:DataPager ID="DataPager1" runat="server" PageSize="12">
-                                <Fields>
-                                    <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
-                                    <asp:NumericPagerField />
-                                    <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
-                                </Fields>
-                            </asp:DataPager>
-                        </td>
-                    </tr>
-                </table>
+              <table runat="server" border="1" style="background-color: #FFFFFF; border-collapse: collapse; border-color: #999999; font-family: Verdana, Arial, Helvetica, sans-serif;">
+            <tr runat="server">
+                <td runat="server">
+                    <table id="groupPlaceholderContainer" runat="server" border="0">
+                        <tr id="groupPlaceholder" runat="server"></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <asp:DataPager ID="DataPager1" runat="server" PageSize="12" style="text-align: center; background-color: #CCCCCC; font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000;">
+            <Fields>
+                <asp:NextPreviousPagerField ButtonType="Button" ShowFirstPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
+                <asp:NumericPagerField />
+                <asp:NextPreviousPagerField ButtonType="Button" ShowLastPageButton="True" ShowNextPageButton="False" ShowPreviousPageButton="False" />
+            </Fields>
+        </asp:DataPager>
             </LayoutTemplate>
             <SelectedItemTemplate>
                 <td runat="server" style="background-color: #008A8C; font-weight: bold;color: #FFFFFF;">NombreSucursal:
