@@ -6,38 +6,88 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+    <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .contenedor-principal {
+        display: flex;
+        justify-content: center; /* centra horizontalmente */
+        align-items: center;     /* centra verticalmente */
+        height: 100vh;           /* usa toda la altura de la ventana */
+    }
+
+    .contenedor-botones {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .boton-container {
+        margin-bottom: 15px;
+    }
+
+    .boton-provincia {
+        width: 140px;
+        padding: 8px;
+        font-size: 14px;
+        background-color: white;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .boton-provincia:hover {
+        background-color: #f0f0f0;
+    }
+</style>
 </head>
+    
 <body>
+        
     <form id="form1" runat="server">
-        <div>
-        </div>
+        <table style="width:100%;">
+    <tr>
+        <!-- Columna para DataList (1 columna) -->
+        <td style="width: 20%; vertical-align: top;">
+        <div class="contenedor-principal">
+    <asp:DataList ID="DataListProvincias" runat="server" CssClass="contenedor-botones">
+        <ItemTemplate>
+            <div class="boton-container">
+                <asp:Button ID="btnProvincias" runat="server"
+                    Text='<%# Eval("DescripcionProvincia") %>'
+                    CommandArgument='<%# Eval("Id_Provincia") %>'
+                    CommandName="eventoBoton"
+                    CssClass="boton-provincia"
+                    OnCommand="btnProvincias_Command" />
+            </div>
+        </ItemTemplate>
+    </asp:DataList>
+</div>
+            </td>
+
+         <td style="width: 80%; vertical-align: top;">
+
         <asp:HyperLink ID="hlSeleccionarSucursales" runat="server" NavigateUrl="~/SeleccionarSucursales.aspx">Listado de Sucursales</asp:HyperLink>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:HyperLink ID="hlMostrarSucursales" runat="server" NavigateUrl="~/ListadoSucursalesSeleccionadas.aspx">Mostrar sucursales seleccionadas</asp:HyperLink>
-        <p>
-            Listado de sucursales:</p>
+            <h2>Listado de sucursales</h2>
         <p>
             Busqueda por nombre de sucursal:<asp:TextBox ID="txtSucursales" runat="server"></asp:TextBox>
             <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
             <asp:Label ID="lblMessage" runat="server"></asp:Label>
         </p>
-        &nbsp;&nbsp;&nbsp;
-        <asp:DataList ID="DataListProvincias" runat="server">
-            <ItemTemplate>
-                <asp:Button ID="btnProvincias" runat="server" Text='<%# Eval("DescripcionProvincia") %>' CommandArgument='<%# Eval("Id_Provincia") %>' CommandName="eventoBoton" OnCommand="btnProvincias_Command" />
-            </ItemTemplate>
-        </asp:DataList>
+
+
         <asp:ListView ID="ListViewSucursales" runat="server" GroupItemCount="4" DataKeyNames="Id_Sucursal" OnPagePropertiesChanging="ListViewSucursales_PagePropertiesChanging" >
             <AlternatingItemTemplate>  
                       <td style="background-color: #E0FFFF; color: #000000; text-align: center; vertical-align: top;">
-                    NombreSucursal:<br />
                     <asp:Label ID="NombreSucursalLabel" runat="server" Text='<%# Eval("NombreSucursal") %>' /><br />
-                    DescripcionSucursal:<br />
                     <asp:Label ID="DescripcionSucursalLabel" runat="server" Text='<%# Eval("DescripcionSucursal") %>' /><br />
-                    URL_Imagen_Sucursal:<br />
                     <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("URL_Imagen_Sucursal") %>' Height="100px" Width="100px" /><br />
-                    Id_Sucursal:<br />
-                    <asp:Label ID="Id_SucursalLabel" runat="server" Text='<%# Eval("Id_Sucursal") %>' /><br />
                     <asp:Button ID="btnSeleccionar" runat="server"
                         CommandArgument='<%# Eval("Id_Sucursal") + " - " + Eval("NombreSucursal") + " - " + Eval("DescripcionSucursal") %>'
                         CommandName="eventoSeleccionar" OnCommand="btnSeleccionar_Command1" Text="Seleccionar" />
@@ -89,14 +139,9 @@
             </InsertItemTemplate>
             <ItemTemplate>
                   <td style="background-color: #DCDCDC; color: #000000; text-align: center; vertical-align: top;">
-            NombreSucursal:<br />
             <asp:Label ID="NombreSucursalLabel" runat="server" Text='<%# Eval("NombreSucursal") %>' /><br />
-            DescripcionSucursal:<br />
             <asp:Label ID="DescripcionSucursalLabel" runat="server" Text='<%# Eval("DescripcionSucursal") %>' /><br />
-            URL_Imagen_Sucursal:<br />
             <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("URL_Imagen_Sucursal") %>' Height="100px" Width="100px" /><br />
-            Id_Sucursal:<br />
-            <asp:Label ID="Id_SucursalLabel" runat="server" Text='<%# Eval("Id_Sucursal") %>' /><br />
             <asp:Button ID="btnSeleccionar" runat="server"
                 CommandArgument='<%# Eval("Id_Sucursal") + " - " + Eval("NombreSucursal") + " - " + Eval("DescripcionSucursal") %>'
                 CommandName="eventoSeleccionar" OnCommand="btnSeleccionar_Command1" Text="Seleccionar" />
@@ -134,6 +179,11 @@
             </SelectedItemTemplate>
         </asp:ListView>
         <asp:Label ID="lblMensaje" runat="server"></asp:Label>
+             </td>
+    </tr>
+</table>
+
     </form>
+        
 </body>
 </html>
