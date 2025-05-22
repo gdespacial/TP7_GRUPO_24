@@ -178,7 +178,8 @@
                 </td>
             </SelectedItemTemplate>
         </asp:ListView>
-        <asp:Label ID="lblMensaje" runat="server"></asp:Label>
+             <br />
+        <h3><asp:Label ID="lblMensaje" runat="server"></asp:Label></h3>
              </td>
     </tr>
 </table>

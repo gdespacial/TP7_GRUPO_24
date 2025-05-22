@@ -60,16 +60,37 @@ namespace TP7_GRUPO_24
 
                 sucursal = new Sucursal(idSucursal, nombreSucursal, descripcionSucursal, "");
 
+
                 if (Session["SucursalesSeleccionadas"] == null)
                 {
 
                     Session["SucursalesSeleccionadas"] = crearTabla();
                 }
-                lblMensaje.Text = "Sucursal Agregada";
-                lblMensaje.ForeColor = System.Drawing.Color.Green;
-                agregarFila((DataTable)Session["SucursalesSeleccionadas"], sucursal);
+
+                DataTable tabla = (DataTable)Session["SucursalesSeleccionadas"];
+                bool sucursaloRepetida = false;
+                foreach (DataRow row in tabla.Rows) // Evitar repeticiones de productos.
+                {
+                    if (row["Id_Sucursal"].ToString() == sucursal.idSucursal.ToString())
+                    {
+                        sucursaloRepetida = true;
+                        break;
+                    }
+                }
+
+                if (!sucursaloRepetida)
+                {
+                    lblMensaje.Text = "Sucursal Agregada";
+                    lblMensaje.ForeColor = System.Drawing.Color.Green;
+                    agregarFila((DataTable)Session["SucursalesSeleccionadas"], sucursal);
+                }
+                else
+                {
+                    lblMensaje.Text = "La sucursal ya ha sido agregada.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                }
+              }
             }
-        }
 
         private DataTable crearTabla()
         {
