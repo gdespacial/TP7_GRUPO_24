@@ -10,7 +10,7 @@ namespace TP7_GRUPO_24
     public class Conexion
     {
         //string connectionString = @"Data Source=DESKTOP-9AUAVE3\SQLEXPRESS;Initial Catalog=BDSucursales;Integrated Security=True";
-        string connectionString = @"Data Source=MOSTRADOR-PC\SQLEXPRESS;Initial Catalog=BDSucursales;Integrated Security=True";
+        string connectionString = @"Data Source=DESKTOP-9AUAVE3\SQLEXPRESS;Initial Catalog=BDSucursales;Integrated Security=True";
         public SqlConnection ObtenerConexion()  // Metodo simple para obtener la conexion a SQL.
         {
             SqlConnection conexion = new SqlConnection(connectionString);
