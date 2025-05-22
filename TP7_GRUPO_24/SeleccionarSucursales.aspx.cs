@@ -69,7 +69,7 @@ namespace TP7_GRUPO_24
 
                 DataTable tabla = (DataTable)Session["SucursalesSeleccionadas"];
                 bool sucursaloRepetida = false;
-                foreach (DataRow row in tabla.Rows) // Evitar repeticiones de productos.
+                foreach (DataRow row in tabla.Rows)
                 {
                     if (row["Id_Sucursal"].ToString() == sucursal.idSucursal.ToString())
                     {
