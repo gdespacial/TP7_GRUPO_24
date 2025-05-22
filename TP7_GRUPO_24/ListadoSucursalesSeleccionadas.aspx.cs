@@ -20,6 +20,11 @@ namespace TP7_GRUPO_24
                     gvSucursales.DataSource = (DataTable)Session["SucursalesSeleccionadas"];
                     gvSucursales.DataBind();
                 }
+                else
+                {
+                    lblMensaje.Text = "No se seleccionó ninguna sucursal";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                }
             }
         }
     }
